@@ -39,7 +39,7 @@ console.log()
 server.get('/', (req,res)=>{
 
   
-res.json(data.chores)
+res.json(data)
 
 
 
@@ -47,7 +47,7 @@ res.json(data.chores)
 
 
 
-server.get('/:id', (req,res)=>{
+server.get('/people/:id', (req,res)=>{
   const chores = data.map(x =>x.chores)
   const { id } = req.params;
 
@@ -65,12 +65,68 @@ server.get('/:id', (req,res)=>{
   }
 
 })
-let peopleId = 1;
 
-server.post("/", (req,res)=>{
 
+server.get("/completed", (req,res)=>{
+  const Datapeople = data.map(x =>x.chores )
+ const choresMap =  Datapeople.map(x => x )
+ console.log(choresMap)
+ 
+    res.json(choresMap)
+  
 
 })
+let peopleId = 1;
+
+server.post('/', (req,res)=>{
+
+  const {name} = req.body
+const  Newpeople ={name ,id:peopleId}
+const findByName = data => {
+  return data.name === name;
+};
+if(data.find(findByName)){
+res.status(400).json({message:'person exsit'})
+}
+data.push(Newpeople);
+peopleId++;
+res.json(data);
+})
+
+
+
+server.put("/", (req,res)=>{
+  const { id } = req.params;
+  const findById = data => {
+    return data.id == id;
+  };
+
+const foundPeople = data.find(findById)
+if(!foundPeople){
+  res.status(400).json({message:'no id'})
+}
+else{
+  if (name) foundPeople.name = name
+
+res.json(data)
+}
+})
+
+
+
+server.delete('/',(req,res)=>{
+  const { id } = req.params;
+  const foundData = data.find(people => people.id == id);
+
+  if (foundData) {
+    const SmurfRemoved = { ...foundData };
+    data = data.filter(people => people.id != id);
+    res.status(200).json(data);
+  } else {
+   res.status(401).json("No smurf by that ID exists in the smurf DB", res);
+  }
+})
+
 
 
 
