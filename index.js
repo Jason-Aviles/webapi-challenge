@@ -1,11 +1,15 @@
 const express = require("express");
-
+const bodyParser = require("body-parser");
 const server = express();
-const port = process.env.PORT  || 5000;
+const cors = require("cors");
+server.use(bodyParser.json());
+server.use(cors());
+
+const port =  5000;
 
 
 
-const data ={
+let data =[{
   id: 1,
   name: 'Frodo Baggins',
   chores: [
@@ -24,15 +28,18 @@ const data ={
       completed: false
     },
   ]
-}
+},
 
+]
 
-
-
+console.log()
 
 
 
 server.get('/', (req,res)=>{
+
+  
+res.json(data.chores)
 
 
 
@@ -40,9 +47,30 @@ server.get('/', (req,res)=>{
 
 
 
+server.get('/:id', (req,res)=>{
+  const chores = data.map(x =>x.chores)
+  const { id } = req.params;
+
+  const findById = people => {
+    return people.id == id;
+  };
+  const gettingPerson = data.find(findById);
+
+  if(!gettingPerson){
+    res.status(400).json({message:'no id'})
+  }else{
+
+    if (chores) gettingPerson.chores = chores;
+    res.json(data)
+  }
+
+})
+let peopleId = 1;
+
+server.post("/", (req,res)=>{
 
 
-
+})
 
 
 
