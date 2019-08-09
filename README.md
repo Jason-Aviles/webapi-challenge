@@ -43,7 +43,7 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 - [ ] What is Express Middleware?
 
 - [ ] How can a client send data to an API?
-
+in an axios call
 - [ ] What can the API return to help clients know if a request was successful?
 
 - [ ] What Express feature can we use to partition an application into sub-applications?
